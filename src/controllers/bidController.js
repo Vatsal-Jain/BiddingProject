@@ -34,12 +34,7 @@ export const bidOnProject = async (req, res) => {
         .json({ message: "User has already bid on this project" });
     }
 
-    // // Check if the token matches the user's token in the database
-    // const user = await User.findOne({ _id: id, token });
-
-    // if (!user) {
-    //   return res.status(401).json({ message: "Unauthorized" });
-    // }
+ 
 
     // Add the new bid
     project.bids.push({ userId: id, amount });
