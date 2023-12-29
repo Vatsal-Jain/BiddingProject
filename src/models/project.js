@@ -5,7 +5,7 @@ const projectSchema = new mongoose.Schema({
   title: {
     type: String,
     required: true,
-    unique: true,
+    unique: [true, "Project Title Should Be Unique"],
   },
   description: String,
   active: {
@@ -13,7 +13,7 @@ const projectSchema = new mongoose.Schema({
     default: true,
   },
   expireDate: String,
-  userRole: String,
+
   adminId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",

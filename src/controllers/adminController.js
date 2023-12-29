@@ -1,13 +1,18 @@
 // src/controllers/adminController.js
 import Project from "../models/project.js";
+import User from "../models/user.js";
 
 export const activateProject = async (req, res) => {
   const { projectId } = req.params;
-  const { adminId, userRole } = req.body;
+
+  const user = req.user;
+  const adminId = user._id;
 
   try {
     // Check if the project exists
     const project = await Project.findById(projectId);
+    const findUser = await User.findById(adminId);
+    const userRole = findUser.role;
 
     if (!project) {
       return res.status(404).json({ message: "Project not found" });
@@ -22,11 +27,9 @@ export const activateProject = async (req, res) => {
 
     // Check if the adminId of the project matches the adminId from the request body
     if (project.adminId.toString() !== adminId) {
-      return res
-        .status(403)
-        .json({
-          message: "Unauthorized. AdminId does not match the project adminId.",
-        });
+      return res.status(403).json({
+        message: "Unauthorized. AdminId does not match the project adminId.",
+      });
     }
 
     // Activate the project
